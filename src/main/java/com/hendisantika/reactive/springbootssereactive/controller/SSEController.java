@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -70,4 +71,10 @@ public class SSEController {
                 .delayElements(Duration.ofSeconds(1));
     }
 
+    @GetMapping(value = "/date", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseBody
+    public Flux<LocalDateTime> getLocalDateTime() {
+        return Flux.<LocalDateTime>generate(sink -> sink.next(LocalDateTime.now()))
+                .delayElements(Duration.ofSeconds(1));
+    }
 }
