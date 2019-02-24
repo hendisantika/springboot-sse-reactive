@@ -32,4 +32,15 @@ public class SSEController {
 
         }
     };
+
+    private Map<Integer, String> books = new ConcurrentHashMap<Integer, String>() {
+        {
+            put(0, "To Kill A Mockingbird");
+            put(1, "The Stranger");
+            put(2, "Catcher in the Rye");
+            put(3, "Moby Dick");
+            put(4, "The Great Gatsby");
+
+        }
+    };
 }
