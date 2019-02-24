@@ -55,4 +55,11 @@ public class SSEController {
         return Flux.<Integer>generate(sink -> sink.next(i++))
                 .delayElements(Duration.ofMillis(500));
     }
+
+    @GetMapping(value = "/quotes", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseBody
+    public Flux<String> getQuotes() {
+        return Flux.<String>generate(book -> book.next(quotes.get(++j % quotes.size())))
+                .delayElements(Duration.ofSeconds(2));
+    }
 }
