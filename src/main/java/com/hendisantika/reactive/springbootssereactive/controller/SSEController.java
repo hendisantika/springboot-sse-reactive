@@ -62,4 +62,12 @@ public class SSEController {
         return Flux.<String>generate(book -> book.next(quotes.get(++j % quotes.size())))
                 .delayElements(Duration.ofSeconds(2));
     }
+
+    @GetMapping(value = "/books", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseBody
+    public Flux<String> getBooks() {
+        return Flux.<String>generate(book -> book.next(books.get(++k % books.size())))
+                .delayElements(Duration.ofSeconds(1));
+    }
+
 }
