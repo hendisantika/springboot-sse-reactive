@@ -1,7 +1,12 @@
 package com.hendisantika.reactive.springbootssereactive.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,4 +48,11 @@ public class SSEController {
 
         }
     };
+
+    @GetMapping(value = "/numbers", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseBody
+    public Flux<Integer> getCounting() {
+        return Flux.<Integer>generate(sink -> sink.next(i++))
+                .delayElements(Duration.ofMillis(500));
+    }
 }
