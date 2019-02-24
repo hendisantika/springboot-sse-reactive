@@ -77,4 +77,16 @@ public class SSEController {
         return Flux.<LocalDateTime>generate(sink -> sink.next(LocalDateTime.now()))
                 .delayElements(Duration.ofSeconds(1));
     }
+
+    @GetMapping(value = "/random", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseBody
+    public Flux<Double> getRandomNumber() {
+        return Flux.<Double>generate(sink -> sink.next(Math.random() * 100))
+                .delayElements(Duration.ofMillis(300));
+    }
+
+    @GetMapping(value = "/")
+    public String all() {
+        return "index";
+    }
 }
